@@ -30,3 +30,180 @@ module "db" {
   db_allowed_cidrs         = [module.vpc.vpc_cidr]
   env                      = var.env
 }
+module "route53" {
+  source = "./route53"
+
+  zone_name = "medingen.in."
+
+  records = [
+    {
+      name = "medingen.in."
+      type = "A"
+      alias = {
+        name                   = "des8ne135n583.cloudfront.net."
+        zone_id                = "Z2FDTNDATAQYW2"
+        evaluate_target_health = false
+      }
+    },
+    {
+      name = "medingen.in."
+      type = "AAAA"
+      alias = {
+        name                   = "des8ne135n583.cloudfront.net."
+        zone_id                = "Z2FDTNDATAQYW2"
+        evaluate_target_health = false
+      }
+    },
+    {
+      name    = "medingen.in."
+      type    = "MX"
+      ttl     = 300
+      records = [
+        "0 smtp.secureserver.net",
+        "10 mailstore1.secureserver.net"
+      ]
+    },
+    {
+      name    = "medingen.in."
+      type    = "NS"
+      ttl     = 172800
+      records = [
+        "ns-94.awsdns-11.com.",
+        "ns-1960.awsdns-53.co.uk.",
+        "ns-532.awsdns-02.net.",
+        "ns-1379.awsdns-44.org."
+      ]
+    },
+    {
+      name    = "medingen.in."
+      type    = "SOA"
+      ttl     = 900
+      records = [
+        "ns-94.awsdns-11.com. awsdns-hostmaster.amazon.com. 1 7200 900 1209600 86400"
+      ]
+    },
+    {
+      name    = "medingen.in."
+      type    = "SRV"
+      ttl     = 300
+      records = ["100 1 443 autodiscover.secureserver.net"]
+    },
+    {
+      name    = "medingen.in."
+      type    = "TXT"
+      ttl     = 300
+      records = [
+        "\"D6663451\"",
+        "\"v=spf1 include:secureserver.net include:zcsend.in -all\"",
+        "\"google-site-verification=G8Deyr5tOp22CfGSwDPP0Fx7aLjnaqysxA2EcYPPo7k\""
+      ]
+    },
+    {
+      name    = "\\100.medingen.in."
+      type    = "TXT"
+      ttl     = 3600
+      records = ["\"v=spf1 include:secureserver.net -all\""]
+    },
+    {
+      name    = "_30d7256e6919ac9042d6d40b959dcb98.medingen.in."
+      type    = "CNAME"
+      ttl     = 300
+      records = [
+        "_d14234aa5f37f1fc94bff1884c4c5b9d.djqtsrsxkq.acm-validations.aws."
+      ]
+    },
+    {
+      name    = "_dmarc.medingen.in."
+      type    = "TXT"
+      ttl     = 300
+      records = [
+        "\"v=DMARC1; p=quarantine; rua=mailto:you@example.com\""
+      ]
+    },
+    {
+      name    = "151034._domainkey.medingen.in."
+      type    = "TXT"
+      ttl     = 300
+      records = [
+        "\"k=rsa; p=MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQC5GjQC6nTni/5xNotye8YaWgl2zC/SdDfUy6DmJKFFc0qTz1sYbdSSyWjp9tdAvXxHlljd8SiXtgoPbOQAR8Wqw2MK/pTm5AFAcUgzuVr9xT2llsEoM9j9uShXIDElnkqxAQZMzQkayrhtYFORWg4G9DIRZxfWiLz7I5S1Fr6sRQIDAQAB\""
+      ]
+    },
+    {
+      name    = "email.medingen.in."
+      type    = "CNAME"
+      ttl     = 300
+      records = ["email.secureserver.net"]
+    },
+    {
+      name    = "www.medingen.in."
+      type    = "CNAME"
+      ttl     = 300
+      records = ["des8ne135n583.cloudfront.net"]
+    },
+    {
+      name    = "_c78bc1960e89fed75039f850418a3c09.www.medingen.in."
+      type    = "CNAME"
+      ttl     = 300
+      records = [
+        "_b2a66717acdddeff496a9ac1e8465010.xlfgrmvvlj.acm-validations.aws."
+      ]
+    }
+  ]
+}
+
+
+module "acm" {
+  source      = "./acm"
+  domain_name = "medingen.in"
+  zone_id     = module.route53.zone_id
+}
+
+resource "aws_security_group" "ec2_sg" {
+  name   = "ec2-sg"
+  vpc_id = module.vpc.vpc_id
+
+  ingress {
+    from_port   = 22
+    to_port     = 22
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  ingress {
+    from_port   = 80
+    to_port     = 80
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+}
+
+module "ec2" {
+  source             = "./ec2"
+  subnet_id          = module.vpc.public_subnet_ids[0]
+  security_group_ids = [aws_security_group.ec2_sg.id]
+  instance_type      = "t3.micro"
+  ami_id             = "ami-0e2ff28bfb72a4e45"
+  key_name           = "medingen-key"
+  env                = var.env
+}
+
+module "cloudfront" {
+  source          = "./cloudfront"
+  domain_name     = "medingen.in"
+  certificate_arn = module.acm.certificate_arn
+  s3_bucket       = module.s3.bucket_names[0]
+}
+
+module "lambda_api" {
+  source      = "./lambda_api"
+  lambda_name = "medingen-api"
+  zip_path    = "lambda.zip"
+  env         = var.env
+}

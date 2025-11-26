@@ -1,0 +1,246 @@
+﻿
+Terraform used the selected providers to generate the following execution
+plan. Resource actions are indicated with the following symbols:
+  + create
+
+Terraform will perform the following actions:
+
+  # module.route53.aws_route53_record.records["151034._domainkey.medingen.in._TXT"] will be created
+  + resource "aws_route53_record" "records" {
+      + allow_overwrite = (known after apply)
+      + fqdn            = (known after apply)
+      + id              = (known after apply)
+      + name            = "151034._domainkey.medingen.in"
+      + records         = [
+          + "\"k=rsa; p=MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQC5GjQC6nTni/5xNotye8YaWgl2zC/SdDfUy6DmJKFFc0qTz1sYbdSSyWjp9tdAvXxHlljd8SiXtgoPbOQAR8Wqw2MK/pTm5AFAcUgzuVr9xT2llsEoM9j9uShXIDElnkqxAQZMzQkayrhtYFORWg4G9DIRZxfWiLz7I5S1Fr6sRQIDAQAB\"",
+        ]
+      + ttl             = 300
+      + type            = "TXT"
+      + zone_id         = (known after apply)
+    }
+
+  # module.route53.aws_route53_record.records["\\100.medingen.in._TXT"] will be created
+  + resource "aws_route53_record" "records" {
+      + allow_overwrite = (known after apply)
+      + fqdn            = (known after apply)
+      + id              = (known after apply)
+      + name            = "\\100.medingen.in"
+      + records         = [
+          + "\"v=spf1 include:secureserver.net -all\"",
+        ]
+      + ttl             = 3600
+      + type            = "TXT"
+      + zone_id         = (known after apply)
+    }
+
+  # module.route53.aws_route53_record.records["_30d7256e6919ac9042d6d40b959dcb98.medingen.in._CNAME"] will be created
+  + resource "aws_route53_record" "records" {
+      + allow_overwrite = (known after apply)
+      + fqdn            = (known after apply)
+      + id              = (known after apply)
+      + name            = "_30d7256e6919ac9042d6d40b959dcb98.medingen.in"
+      + records         = [
+          + "_d14234aa5f37f1fc94bff1884c4c5b9d.djqtsrsxkq.acm-validations.aws.",
+        ]
+      + ttl             = 300
+      + type            = "CNAME"
+      + zone_id         = (known after apply)
+    }
+
+  # module.route53.aws_route53_record.records["_c78bc1960e89fed75039f850418a3c09.www.medingen.in._CNAME"] will be created
+  + resource "aws_route53_record" "records" {
+      + allow_overwrite = (known after apply)
+      + fqdn            = (known after apply)
+      + id              = (known after apply)
+      + name            = "_c78bc1960e89fed75039f850418a3c09.www.medingen.in"
+      + records         = [
+          + "_b2a66717acdddeff496a9ac1e8465010.xlfgrmvvlj.acm-validations.aws.",
+        ]
+      + ttl             = 300
+      + type            = "CNAME"
+      + zone_id         = (known after apply)
+    }
+
+  # module.route53.aws_route53_record.records["_dmarc.medingen.in._TXT"] will be created
+  + resource "aws_route53_record" "records" {
+      + allow_overwrite = (known after apply)
+      + fqdn            = (known after apply)
+      + id              = (known after apply)
+      + name            = "_dmarc.medingen.in"
+      + records         = [
+          + "\"v=DMARC1; p=quarantine; rua=mailto:you@example.com\"",
+        ]
+      + ttl             = 300
+      + type            = "TXT"
+      + zone_id         = (known after apply)
+    }
+
+  # module.route53.aws_route53_record.records["email.medingen.in._CNAME"] will be created
+  + resource "aws_route53_record" "records" {
+      + allow_overwrite = (known after apply)
+      + fqdn            = (known after apply)
+      + id              = (known after apply)
+      + name            = "email.medingen.in"
+      + records         = [
+          + "email.secureserver.net",
+        ]
+      + ttl             = 300
+      + type            = "CNAME"
+      + zone_id         = (known after apply)
+    }
+
+  # module.route53.aws_route53_record.records["medingen.in._A"] will be created
+  + resource "aws_route53_record" "records" {
+      + allow_overwrite = (known after apply)
+      + fqdn            = (known after apply)
+      + id              = (known after apply)
+      + name            = "medingen.in"
+      + type            = "A"
+      + zone_id         = (known after apply)
+
+      + alias {
+          + evaluate_target_health = false
+          + name                   = "des8ne135n583.cloudfront.net"
+          + zone_id                = "Z2FDTNDATAQYW2"
+        }
+    }
+
+  # module.route53.aws_route53_record.records["medingen.in._AAAA"] will be created
+  + resource "aws_route53_record" "records" {
+      + allow_overwrite = (known after apply)
+      + fqdn            = (known after apply)
+      + id              = (known after apply)
+      + name            = "medingen.in"
+      + type            = "AAAA"
+      + zone_id         = (known after apply)
+
+      + alias {
+          + evaluate_target_health = false
+          + name                   = "des8ne135n583.cloudfront.net"
+          + zone_id                = "Z2FDTNDATAQYW2"
+        }
+    }
+
+  # module.route53.aws_route53_record.records["medingen.in._MX"] will be created
+  + resource "aws_route53_record" "records" {
+      + allow_overwrite = (known after apply)
+      + fqdn            = (known after apply)
+      + id              = (known after apply)
+      + name            = "medingen.in"
+      + records         = [
+          + "0 smtp.secureserver.net",
+          + "10 mailstore1.secureserver.net",
+        ]
+      + ttl             = 300
+      + type            = "MX"
+      + zone_id         = (known after apply)
+    }
+
+  # module.route53.aws_route53_record.records["medingen.in._NS"] will be created
+  + resource "aws_route53_record" "records" {
+      + allow_overwrite = (known after apply)
+      + fqdn            = (known after apply)
+      + id              = (known after apply)
+      + name            = "medingen.in"
+      + records         = [
+          + "ns-1379.awsdns-44.org.",
+          + "ns-1960.awsdns-53.co.uk.",
+          + "ns-532.awsdns-02.net.",
+          + "ns-94.awsdns-11.com.",
+        ]
+      + ttl             = 172800
+      + type            = "NS"
+      + zone_id         = (known after apply)
+    }
+
+  # module.route53.aws_route53_record.records["medingen.in._SOA"] will be created
+  + resource "aws_route53_record" "records" {
+      + allow_overwrite = (known after apply)
+      + fqdn            = (known after apply)
+      + id              = (known after apply)
+      + name            = "medingen.in"
+      + records         = [
+          + "ns-94.awsdns-11.com. awsdns-hostmaster.amazon.com. 1 7200 900 1209600 86400",
+        ]
+      + ttl             = 900
+      + type            = "SOA"
+      + zone_id         = (known after apply)
+    }
+
+  # module.route53.aws_route53_record.records["medingen.in._SRV"] will be created
+  + resource "aws_route53_record" "records" {
+      + allow_overwrite = (known after apply)
+      + fqdn            = (known after apply)
+      + id              = (known after apply)
+      + name            = "medingen.in"
+      + records         = [
+          + "100 1 443 autodiscover.secureserver.net",
+        ]
+      + ttl             = 300
+      + type            = "SRV"
+      + zone_id         = (known after apply)
+    }
+
+  # module.route53.aws_route53_record.records["medingen.in._TXT"] will be created
+  + resource "aws_route53_record" "records" {
+      + allow_overwrite = (known after apply)
+      + fqdn            = (known after apply)
+      + id              = (known after apply)
+      + name            = "medingen.in"
+      + records         = [
+          + "\"D6663451\"",
+          + "\"google-site-verification=G8Deyr5tOp22CfGSwDPP0Fx7aLjnaqysxA2EcYPPo7k\"",
+          + "\"v=spf1 include:secureserver.net include:zcsend.in -all\"",
+        ]
+      + ttl             = 300
+      + type            = "TXT"
+      + zone_id         = (known after apply)
+    }
+
+  # module.route53.aws_route53_record.records["www.medingen.in._CNAME"] will be created
+  + resource "aws_route53_record" "records" {
+      + allow_overwrite = (known after apply)
+      + fqdn            = (known after apply)
+      + id              = (known after apply)
+      + name            = "www.medingen.in"
+      + records         = [
+          + "des8ne135n583.cloudfront.net",
+        ]
+      + ttl             = 300
+      + type            = "CNAME"
+      + zone_id         = (known after apply)
+    }
+
+  # module.route53.aws_route53_zone.this will be created
+  + resource "aws_route53_zone" "this" {
+      + arn                 = (known after apply)
+      + comment             = "Managed by Terraform"
+      + force_destroy       = false
+      + id                  = (known after apply)
+      + name                = "medingen.in"
+      + name_servers        = (known after apply)
+      + primary_name_server = (known after apply)
+      + tags_all            = (known after apply)
+      + zone_id             = (known after apply)
+    }
+
+Plan: 15 to add, 0 to change, 0 to destroy.
+
+Changes to Outputs:
+  + route53_name_servers = (known after apply)
+  + route53_zone_id      = (known after apply)
+
+Warning: Resource targeting is in effect
+
+You are creating a plan with the -target option, which means that the result of this plan may not represent all of the changes requested by the current
+configuration.
+
+The -target option is not for routine use, and is provided only for exceptional situations such as recovering from errors or mistakes, or when Terraform
+specifically suggests to use it as part of an error message.
+
+ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
+
+Saved the plan to: route53.tfplan
+
+To perform exactly these actions, run the following command to apply:
+    terraform apply "route53.tfplan"

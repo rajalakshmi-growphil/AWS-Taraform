@@ -1,0 +1,189 @@
+﻿
+Terraform used the selected providers to generate the following execution
+plan. Resource actions are indicated with the following symbols:
+  + create
+
+Terraform will perform the following actions:
+
+  # module.lambda_api.aws_apigatewayv2_api.api will be created
+  + resource "aws_apigatewayv2_api" "api" {
+      + api_endpoint                 = (known after apply)
+      + api_key_selection_expression = "$request.header.x-api-key"
+      + arn                          = (known after apply)
+      + execution_arn                = (known after apply)
+      + id                           = (known after apply)
+      + ip_address_type              = (known after apply)
+      + name                         = "medingen-api-api"
+      + protocol_type                = "HTTP"
+      + route_selection_expression   = "$request.method $request.path"
+      + tags_all                     = (known after apply)
+    }
+
+  # module.lambda_api.aws_apigatewayv2_integration.integration will be created
+  + resource "aws_apigatewayv2_integration" "integration" {
+      + api_id                                    = (known after apply)
+      + connection_type                           = "INTERNET"
+      + id                                        = (known after apply)
+      + integration_response_selection_expression = (known after apply)
+      + integration_type                          = "AWS_PROXY"
+      + integration_uri                           = (known after apply)
+      + payload_format_version                    = "2.0"
+      + timeout_milliseconds                      = (known after apply)
+    }
+
+  # module.lambda_api.aws_apigatewayv2_route.proxy will be created
+  + resource "aws_apigatewayv2_route" "proxy" {
+      + api_id             = (known after apply)
+      + api_key_required   = false
+      + authorization_type = "NONE"
+      + id                 = (known after apply)
+      + route_key          = "ANY /{proxy+}"
+      + target             = (known after apply)
+    }
+
+  # module.lambda_api.aws_apigatewayv2_route.root will be created
+  + resource "aws_apigatewayv2_route" "root" {
+      + api_id             = (known after apply)
+      + api_key_required   = false
+      + authorization_type = "NONE"
+      + id                 = (known after apply)
+      + route_key          = "ANY /"
+      + target             = (known after apply)
+    }
+
+  # module.lambda_api.aws_apigatewayv2_stage.stage will be created
+  + resource "aws_apigatewayv2_stage" "stage" {
+      + api_id        = (known after apply)
+      + arn           = (known after apply)
+      + auto_deploy   = true
+      + deployment_id = (known after apply)
+      + execution_arn = (known after apply)
+      + id            = (known after apply)
+      + invoke_url    = (known after apply)
+      + name          = "$default"
+      + tags_all      = (known after apply)
+    }
+
+  # module.lambda_api.aws_iam_role.lambda_role will be created
+  + resource "aws_iam_role" "lambda_role" {
+      + arn                   = (known after apply)
+      + assume_role_policy    = jsonencode(
+            {
+              + Statement = [
+                  + {
+                      + Action    = "sts:AssumeRole"
+                      + Effect    = "Allow"
+                      + Principal = {
+                          + Service = "lambda.amazonaws.com"
+                        }
+                    },
+                ]
+              + Version   = "2012-10-17"
+            }
+        )
+      + create_date           = (known after apply)
+      + force_detach_policies = false
+      + id                    = (known after apply)
+      + managed_policy_arns   = (known after apply)
+      + max_session_duration  = 3600
+      + name                  = "medingen-api-role"
+      + name_prefix           = (known after apply)
+      + path                  = "/"
+      + tags_all              = (known after apply)
+      + unique_id             = (known after apply)
+
+      + inline_policy (known after apply)
+    }
+
+  # module.lambda_api.aws_iam_role_policy.lambda_policy will be created
+  + resource "aws_iam_role_policy" "lambda_policy" {
+      + id          = (known after apply)
+      + name        = "medingen-api-policy"
+      + name_prefix = (known after apply)
+      + policy      = jsonencode(
+            {
+              + Statement = [
+                  + {
+                      + Action   = [
+                          + "logs:CreateLogGroup",
+                          + "logs:CreateLogStream",
+                          + "logs:PutLogEvents",
+                        ]
+                      + Effect   = "Allow"
+                      + Resource = "*"
+                    },
+                ]
+              + Version   = "2012-10-17"
+            }
+        )
+      + role        = (known after apply)
+    }
+
+  # module.lambda_api.aws_lambda_function.fn will be created
+  + resource "aws_lambda_function" "fn" {
+      + architectures                  = (known after apply)
+      + arn                            = (known after apply)
+      + code_sha256                    = (known after apply)
+      + filename                       = "lambda.zip"
+      + function_name                  = "medingen-api"
+      + handler                        = "wsgi_handler.handler"
+      + id                             = (known after apply)
+      + invoke_arn                     = (known after apply)
+      + last_modified                  = (known after apply)
+      + memory_size                    = 128
+      + package_type                   = "Zip"
+      + publish                        = false
+      + qualified_arn                  = (known after apply)
+      + qualified_invoke_arn           = (known after apply)
+      + reserved_concurrent_executions = -1
+      + role                           = (known after apply)
+      + runtime                        = "python3.12"
+      + signing_job_arn                = (known after apply)
+      + signing_profile_version_arn    = (known after apply)
+      + skip_destroy                   = false
+      + source_code_hash               = (known after apply)
+      + source_code_size               = (known after apply)
+      + tags_all                       = (known after apply)
+      + timeout                        = 30
+      + version                        = (known after apply)
+
+      + environment {
+          + variables = {
+              + "ENV" = "dev"
+            }
+        }
+
+      + ephemeral_storage (known after apply)
+
+      + logging_config (known after apply)
+
+      + tracing_config (known after apply)
+    }
+
+  # module.lambda_api.aws_lambda_permission.allow_api will be created
+  + resource "aws_lambda_permission" "allow_api" {
+      + action              = "lambda:InvokeFunction"
+      + function_name       = "medingen-api"
+      + id                  = (known after apply)
+      + principal           = "apigateway.amazonaws.com"
+      + source_arn          = (known after apply)
+      + statement_id        = "AllowAPIGWInvoke"
+      + statement_id_prefix = (known after apply)
+    }
+
+Plan: 9 to add, 0 to change, 0 to destroy.
+
+Warning: Resource targeting is in effect
+
+You are creating a plan with the -target option, which means that the result of this plan may not represent all of the changes requested by the current
+configuration.
+
+The -target option is not for routine use, and is provided only for exceptional situations such as recovering from errors or mistakes, or when Terraform
+specifically suggests to use it as part of an error message.
+
+ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
+
+Saved the plan to: lambda_api.tfplan
+
+To perform exactly these actions, run the following command to apply:
+    terraform apply "lambda_api.tfplan"

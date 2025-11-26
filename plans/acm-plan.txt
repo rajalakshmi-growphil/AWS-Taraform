@@ -1,0 +1,108 @@
+﻿
+Terraform used the selected providers to generate the following execution
+plan. Resource actions are indicated with the following symbols:
+  + create
+
+Terraform will perform the following actions:
+
+  # module.acm.aws_acm_certificate.cert will be created
+  + resource "aws_acm_certificate" "cert" {
+      + arn                       = (known after apply)
+      + domain_name               = "medingen.in"
+      + domain_validation_options = [
+          + {
+              + domain_name           = "medingen.in"
+              + resource_record_name  = (known after apply)
+              + resource_record_type  = (known after apply)
+              + resource_record_value = (known after apply)
+            },
+          + {
+              + domain_name           = "www.medingen.in"
+              + resource_record_name  = (known after apply)
+              + resource_record_type  = (known after apply)
+              + resource_record_value = (known after apply)
+            },
+        ]
+      + id                        = (known after apply)
+      + key_algorithm             = (known after apply)
+      + not_after                 = (known after apply)
+      + not_before                = (known after apply)
+      + pending_renewal           = (known after apply)
+      + renewal_eligibility       = (known after apply)
+      + renewal_summary           = (known after apply)
+      + status                    = (known after apply)
+      + subject_alternative_names = [
+          + "medingen.in",
+          + "www.medingen.in",
+        ]
+      + tags_all                  = (known after apply)
+      + type                      = (known after apply)
+      + validation_emails         = (known after apply)
+      + validation_method         = "DNS"
+
+      + options (known after apply)
+    }
+
+  # module.acm.aws_acm_certificate_validation.cert_validation will be created
+  + resource "aws_acm_certificate_validation" "cert_validation" {
+      + certificate_arn         = (known after apply)
+      + id                      = (known after apply)
+      + validation_record_fqdns = (known after apply)
+    }
+
+  # module.acm.aws_route53_record.validation["medingen.in"] will be created
+  + resource "aws_route53_record" "validation" {
+      + allow_overwrite = (known after apply)
+      + fqdn            = (known after apply)
+      + id              = (known after apply)
+      + name            = (known after apply)
+      + records         = (known after apply)
+      + ttl             = 60
+      + type            = (known after apply)
+      + zone_id         = (known after apply)
+    }
+
+  # module.acm.aws_route53_record.validation["www.medingen.in"] will be created
+  + resource "aws_route53_record" "validation" {
+      + allow_overwrite = (known after apply)
+      + fqdn            = (known after apply)
+      + id              = (known after apply)
+      + name            = (known after apply)
+      + records         = (known after apply)
+      + ttl             = 60
+      + type            = (known after apply)
+      + zone_id         = (known after apply)
+    }
+
+  # module.route53.aws_route53_zone.this will be created
+  + resource "aws_route53_zone" "this" {
+      + arn                 = (known after apply)
+      + comment             = "Managed by Terraform"
+      + force_destroy       = false
+      + id                  = (known after apply)
+      + name                = "medingen.in"
+      + name_servers        = (known after apply)
+      + primary_name_server = (known after apply)
+      + tags_all            = (known after apply)
+      + zone_id             = (known after apply)
+    }
+
+Plan: 5 to add, 0 to change, 0 to destroy.
+
+Changes to Outputs:
+  + route53_name_servers = (known after apply)
+  + route53_zone_id      = (known after apply)
+
+Warning: Resource targeting is in effect
+
+You are creating a plan with the -target option, which means that the result of this plan may not represent all of the changes requested by the current configuration.
+
+The -target option is not for routine use, and is provided only for exceptional situations such as recovering from errors or mistakes, or when Terraform specifically suggests
+to use it as part of an error message.
+
+ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
+
+Saved the plan to: acm.tfplan
+
+To perform exactly these actions, run the following command to apply:
+    terraform apply "acm.tfplan"
