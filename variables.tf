@@ -3,7 +3,7 @@ variable "region" {
 }
 
 variable "profile" {
-  default = "mig"
+  default = "kyra"
 }
 
 variable "env" {
