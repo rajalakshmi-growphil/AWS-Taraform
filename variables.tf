@@ -29,12 +29,12 @@ variable "private_subnets_cidrs" {
 variable "bucket_names" {
   type = list(string)
   default = [
-    "medingen",
-    "medingen-admin-portal",
-    "medingen-in",
-    "medingen-logs",
-    "medingen-portal",
-    "medingen-store"
+    "medingen-new",
+    "medingen-admin-portal-new",
+    "medingen-in-new",
+    "medingen-logs-new",
+    "medingen-portal-new",
+    "medingen-store-new"
   ]
 }
 
