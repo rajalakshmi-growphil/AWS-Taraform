@@ -1,3 +1,11 @@
-variable "lambda_name" {}
-variable "zip_path" {}
-variable "env" {}
+variable "lambda_name" {
+  type = string
+}
+
+variable "zip_path" {
+  type = string
+}
+
+variable "env" {
+  type = string
+}

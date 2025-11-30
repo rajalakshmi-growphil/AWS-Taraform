@@ -1,7 +1,47 @@
-﻿
+﻿module.route53.aws_route53_zone.this: Refreshing state... [id=Z02383291XM3A6NVIYWGM]
+module.acm.aws_acm_certificate.cert: Refreshing state... [id=arn:aws:acm:ap-south-1:031954087133:certificate/05372c00-4619-4522-81fd-e1a5a52bae75]
+module.acm.aws_route53_record.validation["www.medingen.in"]: Refreshing state... [id=Z02383291XM3A6NVIYWGM__4d57f677f985f6a13b0fcff44bcc90f7.www.medingen.in._CNAME]
+module.acm.aws_route53_record.validation["medingen.in"]: Refreshing state... [id=Z02383291XM3A6NVIYWGM__9b22fb0b992cbc4d5c35e094f6d32696.medingen.in._CNAME]
+
+Note: Objects have changed outside of Terraform
+
+Terraform detected the following changes made outside of Terraform since the
+last "terraform apply" which may have affected this plan:
+
+  # module.acm.aws_acm_certificate.cert has been deleted
+  - resource "aws_acm_certificate" "cert" {
+      - arn                       = "arn:aws:acm:ap-south-1:031954087133:certificate/05372c00-4619-4522-81fd-e1a5a52bae75" -> null
+      - domain_validation_options = [
+          - {
+              - domain_name           = "medingen.in"
+              - resource_record_name  = "_9b22fb0b992cbc4d5c35e094f6d32696.medingen.in."
+              - resource_record_type  = "CNAME"
+              - resource_record_value = "_d0f0e707d197beae784197aa01812316.jkddzztszm.acm-validations.aws."
+            },
+          - {
+              - domain_name           = "www.medingen.in"
+              - resource_record_name  = "_4d57f677f985f6a13b0fcff44bcc90f7.www.medingen.in."
+              - resource_record_type  = "CNAME"
+              - resource_record_value = "_14ce0225c9000f4684a4af6ac59b0fa9.jkddzztszm.acm-validations.aws."
+            },
+        ] -> null
+        id                        = "arn:aws:acm:ap-south-1:031954087133:certificate/05372c00-4619-4522-81fd-e1a5a52bae75"
+        # (15 unchanged attributes hidden)
+
+        # (1 unchanged block hidden)
+    }
+
+
+Unless you have made equivalent changes to your configuration, or ignored the
+relevant attributes using ignore_changes, the following plan may include
+actions to undo or respond to these changes.
+
+ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
+
 Terraform used the selected providers to generate the following execution
 plan. Resource actions are indicated with the following symbols:
   + create
+-/+ destroy and then create replacement
 
 Terraform will perform the following actions:
 
@@ -50,55 +90,42 @@ Terraform will perform the following actions:
       + validation_record_fqdns = (known after apply)
     }
 
-  # module.acm.aws_route53_record.validation["medingen.in"] will be created
-  + resource "aws_route53_record" "validation" {
-      + allow_overwrite = (known after apply)
-      + fqdn            = (known after apply)
-      + id              = (known after apply)
-      + name            = (known after apply)
-      + records         = (known after apply)
-      + ttl             = 60
-      + type            = (known after apply)
-      + zone_id         = (known after apply)
+  # module.acm.aws_route53_record.validation["medingen.in"] must be replaced
+-/+ resource "aws_route53_record" "validation" {
+      + allow_overwrite                  = (known after apply)
+      ~ fqdn                             = "_9b22fb0b992cbc4d5c35e094f6d32696.medingen.in" -> (known after apply)
+      ~ id                               = "Z02383291XM3A6NVIYWGM__9b22fb0b992cbc4d5c35e094f6d32696.medingen.in._CNAME" -> (known after apply)
+      - multivalue_answer_routing_policy = false -> null
+      ~ name                             = "_9b22fb0b992cbc4d5c35e094f6d32696.medingen.in" -> (known after apply) # forces replacement
+      ~ records                          = [
+          - "_d0f0e707d197beae784197aa01812316.jkddzztszm.acm-validations.aws.",
+        ] -> (known after apply)
+      ~ type                             = "CNAME" -> (known after apply)
+        # (4 unchanged attributes hidden)
     }
 
-  # module.acm.aws_route53_record.validation["www.medingen.in"] will be created
-  + resource "aws_route53_record" "validation" {
-      + allow_overwrite = (known after apply)
-      + fqdn            = (known after apply)
-      + id              = (known after apply)
-      + name            = (known after apply)
-      + records         = (known after apply)
-      + ttl             = 60
-      + type            = (known after apply)
-      + zone_id         = (known after apply)
+  # module.acm.aws_route53_record.validation["www.medingen.in"] must be replaced
+-/+ resource "aws_route53_record" "validation" {
+      + allow_overwrite                  = (known after apply)
+      ~ fqdn                             = "_4d57f677f985f6a13b0fcff44bcc90f7.www.medingen.in" -> (known after apply)
+      ~ id                               = "Z02383291XM3A6NVIYWGM__4d57f677f985f6a13b0fcff44bcc90f7.www.medingen.in._CNAME" -> (known after apply)
+      - multivalue_answer_routing_policy = false -> null
+      ~ name                             = "_4d57f677f985f6a13b0fcff44bcc90f7.www.medingen.in" -> (known after apply) # forces replacement
+      ~ records                          = [
+          - "_14ce0225c9000f4684a4af6ac59b0fa9.jkddzztszm.acm-validations.aws.",
+        ] -> (known after apply)
+      ~ type                             = "CNAME" -> (known after apply)
+        # (4 unchanged attributes hidden)
     }
 
-  # module.route53.aws_route53_zone.this will be created
-  + resource "aws_route53_zone" "this" {
-      + arn                 = (known after apply)
-      + comment             = "Managed by Terraform"
-      + force_destroy       = false
-      + id                  = (known after apply)
-      + name                = "medingen.in"
-      + name_servers        = (known after apply)
-      + primary_name_server = (known after apply)
-      + tags_all            = (known after apply)
-      + zone_id             = (known after apply)
-    }
-
-Plan: 5 to add, 0 to change, 0 to destroy.
-
-Changes to Outputs:
-  + route53_name_servers = (known after apply)
-  + route53_zone_id      = (known after apply)
+Plan: 4 to add, 0 to change, 2 to destroy.
 
 Warning: Resource targeting is in effect
 
 You are creating a plan with the -target option, which means that the result of this plan may not represent all of the changes requested by the current configuration.
 
-The -target option is not for routine use, and is provided only for exceptional situations such as recovering from errors or mistakes, or when Terraform specifically suggests
-to use it as part of an error message.
+The -target option is not for routine use, and is provided only for exceptional situations such as recovering from errors or mistakes, or when Terraform specifically
+suggests to use it as part of an error message.
 
 ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
 

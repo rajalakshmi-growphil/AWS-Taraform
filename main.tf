@@ -36,6 +36,7 @@ module "route53" {
   zone_name = "medingen.in."
 
   records = [
+    # A Record (CloudFront)
     {
       name = "medingen.in."
       type = "A"
@@ -45,6 +46,8 @@ module "route53" {
         evaluate_target_health = false
       }
     },
+
+    # AAAA Record (CloudFront)
     {
       name = "medingen.in."
       type = "AAAA"
@@ -54,6 +57,8 @@ module "route53" {
         evaluate_target_health = false
       }
     },
+
+    # MX records
     {
       name    = "medingen.in."
       type    = "MX"
@@ -63,47 +68,36 @@ module "route53" {
         "10 mailstore1.secureserver.net"
       ]
     },
-    {
-      name    = "medingen.in."
-      type    = "NS"
-      ttl     = 172800
-      records = [
-        "ns-94.awsdns-11.com.",
-        "ns-1960.awsdns-53.co.uk.",
-        "ns-532.awsdns-02.net.",
-        "ns-1379.awsdns-44.org."
-      ]
-    },
-    {
-      name    = "medingen.in."
-      type    = "SOA"
-      ttl     = 900
-      records = [
-        "ns-94.awsdns-11.com. awsdns-hostmaster.amazon.com. 1 7200 900 1209600 86400"
-      ]
-    },
+
+    # SRV
     {
       name    = "medingen.in."
       type    = "SRV"
       ttl     = 300
       records = ["100 1 443 autodiscover.secureserver.net"]
     },
+
+    # TXT — FIXED (no double-quotes)
     {
       name    = "medingen.in."
       type    = "TXT"
       ttl     = 300
       records = [
-        "\"D6663451\"",
-        "\"v=spf1 include:secureserver.net include:zcsend.in -all\"",
-        "\"google-site-verification=G8Deyr5tOp22CfGSwDPP0Fx7aLjnaqysxA2EcYPPo7k\""
+        "D6663451",
+        "v=spf1 include:secureserver.net include:zcsend.in -all",
+        "google-site-verification=G8Deyr5tOp22CfGSwDPP0Fx7aLjnaqysxA2EcYPPo7k"
       ]
     },
+
+    # TXT — escaped name (DKIM)
     {
       name    = "\\100.medingen.in."
       type    = "TXT"
       ttl     = 3600
-      records = ["\"v=spf1 include:secureserver.net -all\""]
+      records = ["v=spf1 include:secureserver.net -all"]
     },
+
+    # ACM validation (old) — optional: REMOVE if Terraform creates new ones automatically
     {
       name    = "_30d7256e6919ac9042d6d40b959dcb98.medingen.in."
       type    = "CNAME"
@@ -112,34 +106,44 @@ module "route53" {
         "_d14234aa5f37f1fc94bff1884c4c5b9d.djqtsrsxkq.acm-validations.aws."
       ]
     },
+
+    # DMARC TXT (fixed)
     {
       name    = "_dmarc.medingen.in."
       type    = "TXT"
       ttl     = 300
       records = [
-        "\"v=DMARC1; p=quarantine; rua=mailto:you@example.com\""
+        "v=DMARC1; p=quarantine; rua=mailto:you@example.com"
       ]
     },
+
+    # DKIM record (fixed)
     {
       name    = "151034._domainkey.medingen.in."
       type    = "TXT"
       ttl     = 300
       records = [
-        "\"k=rsa; p=MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQC5GjQC6nTni/5xNotye8YaWgl2zC/SdDfUy6DmJKFFc0qTz1sYbdSSyWjp9tdAvXxHlljd8SiXtgoPbOQAR8Wqw2MK/pTm5AFAcUgzuVr9xT2llsEoM9j9uShXIDElnkqxAQZMzQkayrhtYFORWg4G9DIRZxfWiLz7I5S1Fr6sRQIDAQAB\""
+        "k=rsa; p=MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQC5GjQC6nTni/5xNotye8YaWgl2zC/SdDfUy6DmJKFFc0qTz1sYbdSSyWjp9tdAvXxHlljd8SiXtgoPbOQAR8Wqw2MK/pTm5AFAcUgzuVr9xT2llsEoM9j9uShXIDElnkqxAQZMzQkayrhtYFORWg4G9DIRZxfWiLz7I5S1Fr6sRQIDAQAB"
       ]
     },
+
+    # Email CNAME
     {
       name    = "email.medingen.in."
       type    = "CNAME"
       ttl     = 300
-      records = ["email.secureserver.net"]
+      records = ["email.secureserver.net."]
     },
+
+    # WWW → CloudFront
     {
       name    = "www.medingen.in."
       type    = "CNAME"
       ttl     = 300
-      records = ["des8ne135n583.cloudfront.net"]
+      records = ["des8ne135n583.cloudfront.net."]
     },
+
+    # ACM validation (www) — optional: REMOVE if using Terraform ACM module
     {
       name    = "_c78bc1960e89fed75039f850418a3c09.www.medingen.in."
       type    = "CNAME"
@@ -153,10 +157,15 @@ module "route53" {
 
 
 module "acm" {
-  source      = "./acm"
-  domain_name = "medingen.in"
-  zone_id     = module.route53.zone_id
+  source       = "./acm"
+  domain_name  = "medingen.in"
+  zone_id      = module.route53.zone_id
+
+  subject_alternative_names = [
+    "www.medingen.in"
+  ]
 }
+
 
 resource "aws_security_group" "ec2_sg" {
   name   = "ec2-sg"
@@ -189,7 +198,7 @@ module "ec2" {
   subnet_id          = module.vpc.public_subnet_ids[0]
   security_group_ids = [aws_security_group.ec2_sg.id]
   instance_type      = "t3.micro"
-  ami_id             = "ami-0e2ff28bfb72a4e45"
+  ami_id             = "ami-0f58b397bc5f1bf1f"
   key_name           = "medingen-key"
   env                = var.env
 }

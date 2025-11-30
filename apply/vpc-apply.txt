@@ -197,6 +197,39 @@ Terraform will perform the following actions:
     }
 
 Plan: 11 to add, 0 to change, 0 to destroy.
+module.vpc.aws_internet_gateway.igw: Creating...
+module.vpc.aws_subnet.public["0"]: Creating...
+module.vpc.aws_subnet.public["1"]: Creating...
+module.vpc.aws_eip.nat: Creating...
+module.vpc.aws_internet_gateway.igw: Creation complete after 0s [id=igw-03e547aa360edb428]
+module.vpc.aws_eip.nat: Creation complete after 1s [id=eipalloc-0ba2880933774e75b]
+module.vpc.aws_route_table.public: Creating...
+module.vpc.aws_route_table.public: Creation complete after 1s [id=rtb-09e987869a850437c]
+module.vpc.aws_subnet.public["1"]: Still creating... [00m10s elapsed]
+module.vpc.aws_subnet.public["0"]: Still creating... [00m10s elapsed]
+module.vpc.aws_subnet.public["0"]: Creation complete after 11s [id=subnet-096fe885c735bd4b5]
+module.vpc.aws_subnet.public["1"]: Creation complete after 11s [id=subnet-0904d04092cfab38e]
+module.vpc.aws_route_table_association.public_assoc["0"]: Creating...
+module.vpc.aws_route_table_association.public_assoc["1"]: Creating...
+module.vpc.aws_nat_gateway.nat: Creating...
+module.vpc.aws_route_table_association.public_assoc["1"]: Creation complete after 0s [id=rtbassoc-096dd3243d969f8b1]
+module.vpc.aws_route_table_association.public_assoc["0"]: Creation complete after 0s [id=rtbassoc-090d40c24787c44e0]
+module.vpc.aws_nat_gateway.nat: Still creating... [00m10s elapsed]
+module.vpc.aws_nat_gateway.nat: Still creating... [00m20s elapsed]
+module.vpc.aws_nat_gateway.nat: Still creating... [00m30s elapsed]
+module.vpc.aws_nat_gateway.nat: Still creating... [00m40s elapsed]
+module.vpc.aws_nat_gateway.nat: Still creating... [00m50s elapsed]
+module.vpc.aws_nat_gateway.nat: Still creating... [01m00s elapsed]
+module.vpc.aws_nat_gateway.nat: Still creating... [01m10s elapsed]
+module.vpc.aws_nat_gateway.nat: Still creating... [01m20s elapsed]
+module.vpc.aws_nat_gateway.nat: Still creating... [01m30s elapsed]
+module.vpc.aws_nat_gateway.nat: Creation complete after 1m35s [id=nat-086a011f055eadf24]
+module.vpc.aws_route_table.private: Creating...
+module.vpc.aws_route_table.private: Creation complete after 1s [id=rtb-049ed29a6ee7d1f77]
+module.vpc.aws_route_table_association.private_assoc["1"]: Creating...
+module.vpc.aws_route_table_association.private_assoc["0"]: Creating...
+module.vpc.aws_route_table_association.private_assoc["1"]: Creation complete after 0s [id=rtbassoc-018ec66c1b3d24fe2]
+module.vpc.aws_route_table_association.private_assoc["0"]: Creation complete after 0s [id=rtbassoc-02cd063fce351906f]
 
 Warning: Resource targeting is in effect
 
@@ -205,9 +238,22 @@ You are creating a plan with the -target option, which means that the result of 
 The -target option is not for routine use, and is provided only for exceptional situations such as recovering from errors or mistakes, or when Terraform specifically
 suggests to use it as part of an error message.
 
-ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
+Warning: Applied changes may be incomplete
 
-Saved the plan to: vpc.tfplan
+The plan was created with the -target option in effect, so some changes requested in the configuration may have been ignored and the output values may not be fully
+updated. Run the following command to verify that no other changes are pending:
+    terraform plan
 
-To perform exactly these actions, run the following command to apply:
-    terraform apply "vpc.tfplan"
+Note that the -target option is not suitable for routine use, and is provided only for exceptional situations such as recovering from errors or mistakes, or when
+Terraform specifically suggests to use it as part of an error message.
+
+Apply complete! Resources: 11 added, 0 changed, 0 destroyed.
+
+Outputs:
+
+db_endpoint = "medingen-mysql-db.czes2c8i214u.ap-south-1.rds.amazonaws.com:3306"
+private_subnet_ids = [
+  "subnet-0e6170c38c1f520d4",
+  "subnet-0999f67d0d1bc49a2",
+]
+vpc_id = "vpc-0c383f19a8f5fb344"

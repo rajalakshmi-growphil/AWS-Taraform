@@ -1,10 +1,7 @@
 resource "aws_acm_certificate" "cert" {
-  domain_name       = var.domain_name
-  validation_method = "DNS"
-
-  subject_alternative_names = [
-    "www.${var.domain_name}"
-  ]
+  domain_name               = var.domain_name
+  validation_method         = "DNS"
+  subject_alternative_names = var.subject_alternative_names
 
   lifecycle {
     create_before_destroy = true
@@ -15,9 +12,9 @@ resource "aws_route53_record" "validation" {
   for_each = {
     for dvo in aws_acm_certificate.cert.domain_validation_options :
     dvo.domain_name => {
-      name    = dvo.resource_record_name
-      type    = dvo.resource_record_type
-      record  = dvo.resource_record_value
+      name   = dvo.resource_record_name
+      type   = dvo.resource_record_type
+      record = dvo.resource_record_value
     }
   }
 

@@ -30,8 +30,8 @@ variable "bucket_names" {
   type = list(string)
   default = [
     "medingen-new",
-    "medingen-admin-portal-new",
-    "medingen-in-new",
+    "medingen-admin-portal-new-2025",
+    "medingen-in-new-2025",
     "medingen-logs-new",
     "medingen-portal-new",
     "medingen-store-new"

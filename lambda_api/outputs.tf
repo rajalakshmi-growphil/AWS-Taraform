@@ -1,5 +1,5 @@
 output "api_url" {
-  value = aws_apigatewayv2_api.api.api_endpoint
+  value = "${aws_api_gateway_rest_api.rest.execution_arn}"
 }
 
 output "lambda_arn" {
