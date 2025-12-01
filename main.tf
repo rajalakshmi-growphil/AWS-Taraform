@@ -198,10 +198,10 @@ module "ec2" {
   subnet_id          = module.vpc.public_subnet_ids[0]
   security_group_ids = [aws_security_group.ec2_sg.id]
   instance_type      = "t3.micro"
-  ami_id             = "ami-0f58b397bc5f1bf1f"
-  key_name           = "medingen-key"
+  ami_id             = "ami-087d1c9a513324697"
   env                = var.env
 }
+
 
 module "cloudfront" {
   source          = "./cloudfront"

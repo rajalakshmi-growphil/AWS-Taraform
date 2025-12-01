@@ -1,69 +1,17 @@
-﻿
+﻿module.vpc.aws_vpc.main: Refreshing state... [id=vpc-0c383f19a8f5fb344]
+module.vpc.aws_subnet.public["1"]: Refreshing state... [id=subnet-0904d04092cfab38e]
+module.vpc.aws_subnet.public["0"]: Refreshing state... [id=subnet-096fe885c735bd4b5]
+aws_security_group.ec2_sg: Refreshing state... [id=sg-02ed509a3120c1464]
+
 Terraform used the selected providers to generate the following execution
 plan. Resource actions are indicated with the following symbols:
   + create
 
 Terraform will perform the following actions:
 
-  # aws_security_group.ec2_sg will be created
-  + resource "aws_security_group" "ec2_sg" {
-      + arn                    = (known after apply)
-      + description            = "Managed by Terraform"
-      + egress                 = [
-          + {
-              + cidr_blocks      = [
-                  + "0.0.0.0/0",
-                ]
-              + from_port        = 0
-              + ipv6_cidr_blocks = []
-              + prefix_list_ids  = []
-              + protocol         = "-1"
-              + security_groups  = []
-              + self             = false
-              + to_port          = 0
-                # (1 unchanged attribute hidden)
-            },
-        ]
-      + id                     = (known after apply)
-      + ingress                = [
-          + {
-              + cidr_blocks      = [
-                  + "0.0.0.0/0",
-                ]
-              + from_port        = 22
-              + ipv6_cidr_blocks = []
-              + prefix_list_ids  = []
-              + protocol         = "tcp"
-              + security_groups  = []
-              + self             = false
-              + to_port          = 22
-                # (1 unchanged attribute hidden)
-            },
-          + {
-              + cidr_blocks      = [
-                  + "0.0.0.0/0",
-                ]
-              + from_port        = 80
-              + ipv6_cidr_blocks = []
-              + prefix_list_ids  = []
-              + protocol         = "tcp"
-              + security_groups  = []
-              + self             = false
-              + to_port          = 80
-                # (1 unchanged attribute hidden)
-            },
-        ]
-      + name                   = "ec2-sg"
-      + name_prefix            = (known after apply)
-      + owner_id               = (known after apply)
-      + revoke_rules_on_delete = false
-      + tags_all               = (known after apply)
-      + vpc_id                 = (known after apply)
-    }
-
   # module.ec2.aws_instance.server will be created
   + resource "aws_instance" "server" {
-      + ami                                  = "ami-0e2ff28bfb72a4e45"
+      + ami                                  = "ami-087d1c9a513324697"
       + arn                                  = (known after apply)
       + associate_public_ip_address          = (known after apply)
       + availability_zone                    = (known after apply)
@@ -99,7 +47,7 @@ Terraform will perform the following actions:
       + security_groups                      = (known after apply)
       + source_dest_check                    = true
       + spot_instance_request_id             = (known after apply)
-      + subnet_id                            = (known after apply)
+      + subnet_id                            = "subnet-096fe885c735bd4b5"
       + tags                                 = {
           + "Name" = "dev-app-server"
         }
@@ -110,7 +58,9 @@ Terraform will perform the following actions:
       + user_data                            = (known after apply)
       + user_data_base64                     = (known after apply)
       + user_data_replace_on_change          = false
-      + vpc_security_group_ids               = (known after apply)
+      + vpc_security_group_ids               = [
+          + "sg-02ed509a3120c1464",
+        ]
 
       + capacity_reservation_specification (known after apply)
 
@@ -135,100 +85,27 @@ Terraform will perform the following actions:
       + root_block_device (known after apply)
     }
 
-  # module.vpc.aws_subnet.public["0"] will be created
-  + resource "aws_subnet" "public" {
-      + arn                                            = (known after apply)
-      + assign_ipv6_address_on_creation                = false
-      + availability_zone                              = "ap-south-1a"
-      + availability_zone_id                           = (known after apply)
-      + cidr_block                                     = "10.10.1.0/24"
-      + enable_dns64                                   = false
-      + enable_resource_name_dns_a_record_on_launch    = false
-      + enable_resource_name_dns_aaaa_record_on_launch = false
-      + id                                             = (known after apply)
-      + ipv6_cidr_block_association_id                 = (known after apply)
-      + ipv6_native                                    = false
-      + map_public_ip_on_launch                        = true
-      + owner_id                                       = (known after apply)
-      + private_dns_hostname_type_on_launch            = (known after apply)
-      + tags                                           = {
-          + "Name" = "medingen-public-0"
-          + "Tier" = "public"
-        }
-      + tags_all                                       = {
-          + "Name" = "medingen-public-0"
-          + "Tier" = "public"
-        }
-      + vpc_id                                         = (known after apply)
+  # module.ec2.aws_key_pair.medingen_key will be created
+  + resource "aws_key_pair" "medingen_key" {
+      + arn             = (known after apply)
+      + fingerprint     = (known after apply)
+      + id              = (known after apply)
+      + key_name        = "medingen-key"
+      + key_name_prefix = (known after apply)
+      + key_pair_id     = (known after apply)
+      + key_type        = (known after apply)
+      + public_key      = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQDYURz6yI94+YDAwwgpu528Jw39xlREC3ekXqQRNTKdpAUttBV8AEpWtn86LUrUsbAdMPMqkVKSROd4/G9gsDjFXwg9c8vWgDIpfD+aoWkw1D8SWubWZMtghTsM5TokQwxFgx4Xl/3w4sIM7+NVRkG20VgpEcxDkBeyFL8S5Ju3lNbfzdhF2tdtmD76e/Pz6dE/sUzkWdIts59zL6bytfne8IDva+OPQWMTraOPeZcgugsM3QTLineogQPukDGqN9fJMwlKUi8R3O7aDELLiu7nMNAwOY3F2U98MD6gDko/dKhzcs4FzSfgShjZ2d1/WlHbH34YbQCHBxej4mKjllQ53vaXoRh2wTa9Dv57fgkyF7v4FzyhTt1Cewme994wGRgj3Sl9pzudwGtAo3Bza0WBhUadaPHmEwxRkg8hsoX4wrNRxbraYu6evdMp+JkZieMKL0JoTu0hTw2vUEIp3MgS8Ny6jWKvI3DRm9cGEqaWptjQRy7dTKFWApeMpj2gLSC+cI6JGqpH3BiIWhePIf1ucecvx1KnQNCQPJjb5YFsH3z7xLF1VpO+jAEKdZJ+6a47xhBMlK4Jyi1mAy4bNlmbHUVOUgjxfK4XwlytPeL1vQ2mFVLqToAGt/SUxBolv6WqyP2fGPy47YUlpMorXc/FPVM2uvD+hYGw00PA9ySThQ== rajal@Rajalakshmi"
+      + tags_all        = (known after apply)
     }
 
-  # module.vpc.aws_subnet.public["1"] will be created
-  + resource "aws_subnet" "public" {
-      + arn                                            = (known after apply)
-      + assign_ipv6_address_on_creation                = false
-      + availability_zone                              = "ap-south-1b"
-      + availability_zone_id                           = (known after apply)
-      + cidr_block                                     = "10.10.2.0/24"
-      + enable_dns64                                   = false
-      + enable_resource_name_dns_a_record_on_launch    = false
-      + enable_resource_name_dns_aaaa_record_on_launch = false
-      + id                                             = (known after apply)
-      + ipv6_cidr_block_association_id                 = (known after apply)
-      + ipv6_native                                    = false
-      + map_public_ip_on_launch                        = true
-      + owner_id                                       = (known after apply)
-      + private_dns_hostname_type_on_launch            = (known after apply)
-      + tags                                           = {
-          + "Name" = "medingen-public-1"
-          + "Tier" = "public"
-        }
-      + tags_all                                       = {
-          + "Name" = "medingen-public-1"
-          + "Tier" = "public"
-        }
-      + vpc_id                                         = (known after apply)
-    }
-
-  # module.vpc.aws_vpc.main will be created
-  + resource "aws_vpc" "main" {
-      + arn                                  = (known after apply)
-      + cidr_block                           = "10.10.0.0/16"
-      + default_network_acl_id               = (known after apply)
-      + default_route_table_id               = (known after apply)
-      + default_security_group_id            = (known after apply)
-      + dhcp_options_id                      = (known after apply)
-      + enable_dns_hostnames                 = true
-      + enable_dns_support                   = true
-      + enable_network_address_usage_metrics = (known after apply)
-      + id                                   = (known after apply)
-      + instance_tenancy                     = "default"
-      + ipv6_association_id                  = (known after apply)
-      + ipv6_cidr_block                      = (known after apply)
-      + ipv6_cidr_block_network_border_group = (known after apply)
-      + main_route_table_id                  = (known after apply)
-      + owner_id                             = (known after apply)
-      + tags                                 = {
-          + "Env"  = "dev"
-          + "Name" = "medingen-vpc"
-        }
-      + tags_all                             = {
-          + "Env"  = "dev"
-          + "Name" = "medingen-vpc"
-        }
-    }
-
-Plan: 5 to add, 0 to change, 0 to destroy.
-
-Changes to Outputs:
-  + vpc_id = (known after apply)
+Plan: 2 to add, 0 to change, 0 to destroy.
 
 Warning: Resource targeting is in effect
 
-You are creating a plan with the -target option, which means that the result of this plan may not represent all of the changes requested by the current
-configuration.
+You are creating a plan with the -target option, which means that the result of this plan may not represent all of the changes requested by the current configuration.
 
-The -target option is not for routine use, and is provided only for exceptional situations such as recovering from errors or mistakes, or when Terraform
-specifically suggests to use it as part of an error message.
+The -target option is not for routine use, and is provided only for exceptional situations such as recovering from errors or mistakes, or when Terraform specifically
+suggests to use it as part of an error message.
 
 ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
 

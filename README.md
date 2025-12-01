@@ -35,3 +35,5 @@ terraform plan -no-color -target module.acm -var "db_password=Medingen@2025" -ou
 terraform plan -no-color -target module.ec2 -var "db_password=Medingen@2025" -out ec2.tfplan | Out-File -Encoding utf8 ec2-plan.txt
 <!-- Apply -->
 terraform apply -no-color -target module.lambda_api -var "db_password=Medingen#2025!" 2>&1 | Tee-Object -FilePath lambda_api-apply.txt
+
+ssh-keygen -t rsa -b 4096 -f medingen-key
