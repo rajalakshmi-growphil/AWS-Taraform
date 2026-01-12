@@ -1,0 +1,112 @@
+﻿module.route53.aws_route53_zone.this: Refreshing state... [id=Z02383291XM3A6NVIYWGM]
+module.route53.aws_route53_record.records["www.medingen.in._CNAME"]: Refreshing state... [id=Z02383291XM3A6NVIYWGM_www.medingen.in._CNAME]
+module.route53.aws_route53_record.records["_c78bc1960e89fed75039f850418a3c09.www.medingen.in._CNAME"]: Refreshing state... [id=Z02383291XM3A6NVIYWGM__c78bc1960e89fed75039f850418a3c09.www.medingen.in._CNAME]
+module.route53.aws_route53_record.records["email.medingen.in._CNAME"]: Refreshing state... [id=Z02383291XM3A6NVIYWGM_email.medingen.in._CNAME]
+module.route53.aws_route53_record.records["medingen.in._A"]: Refreshing state... [id=Z02383291XM3A6NVIYWGM_medingen.in._A]
+module.route53.aws_route53_record.records["medingen.in._AAAA"]: Refreshing state... [id=Z02383291XM3A6NVIYWGM_medingen.in._AAAA]
+module.route53.aws_route53_record.records["_30d7256e6919ac9042d6d40b959dcb98.medingen.in._CNAME"]: Refreshing state... [id=Z02383291XM3A6NVIYWGM__30d7256e6919ac9042d6d40b959dcb98.medingen.in._CNAME]
+module.route53.aws_route53_record.records["medingen.in._SRV"]: Refreshing state... [id=Z02383291XM3A6NVIYWGM_medingen.in._SRV]
+module.route53.aws_route53_record.records["medingen.in._MX"]: Refreshing state... [id=Z02383291XM3A6NVIYWGM_medingen.in._MX]
+
+Terraform used the selected providers to generate the following execution
+plan. Resource actions are indicated with the following symbols:
+  + create
+  ~ update in-place
+
+Terraform will perform the following actions:
+
+  # module.route53.aws_route53_record.records["151034._domainkey.medingen.in._TXT"] will be created
+  + resource "aws_route53_record" "records" {
+      + allow_overwrite = (known after apply)
+      + fqdn            = (known after apply)
+      + id              = (known after apply)
+      + name            = "151034._domainkey.medingen.in"
+      + records         = [
+          + "k=rsa; p=MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQC5GjQC6nTni/5xNotye8YaWgl2zC/SdDfUy6DmJKFFc0qTz1sYbdSSyWjp9tdAvXxHlljd8SiXtgoPbOQAR8Wqw2MK/pTm5AFAcUgzuVr9xT2llsEoM9j9uShXIDElnkqxAQZMzQkayrhtYFORWg4G9DIRZxfWiLz7I5S1Fr6sRQIDAQAB",
+        ]
+      + ttl             = 300
+      + type            = "TXT"
+      + zone_id         = "Z02383291XM3A6NVIYWGM"
+    }
+
+  # module.route53.aws_route53_record.records["\\100.medingen.in._TXT"] will be created
+  + resource "aws_route53_record" "records" {
+      + allow_overwrite = (known after apply)
+      + fqdn            = (known after apply)
+      + id              = (known after apply)
+      + name            = "\\100.medingen.in"
+      + records         = [
+          + "v=spf1 include:secureserver.net -all",
+        ]
+      + ttl             = 3600
+      + type            = "TXT"
+      + zone_id         = "Z02383291XM3A6NVIYWGM"
+    }
+
+  # module.route53.aws_route53_record.records["_dmarc.medingen.in._TXT"] will be created
+  + resource "aws_route53_record" "records" {
+      + allow_overwrite = (known after apply)
+      + fqdn            = (known after apply)
+      + id              = (known after apply)
+      + name            = "_dmarc.medingen.in"
+      + records         = [
+          + "v=DMARC1; p=quarantine; rua=mailto:you@example.com",
+        ]
+      + ttl             = 300
+      + type            = "TXT"
+      + zone_id         = "Z02383291XM3A6NVIYWGM"
+    }
+
+  # module.route53.aws_route53_record.records["email.medingen.in._CNAME"] will be updated in-place
+  ~ resource "aws_route53_record" "records" {
+        id                               = "Z02383291XM3A6NVIYWGM_email.medingen.in._CNAME"
+        name                             = "email.medingen.in"
+      ~ records                          = [
+          - "email.secureserver.net",
+          + "email.secureserver.net.",
+        ]
+        # (7 unchanged attributes hidden)
+    }
+
+  # module.route53.aws_route53_record.records["medingen.in._TXT"] will be created
+  + resource "aws_route53_record" "records" {
+      + allow_overwrite = (known after apply)
+      + fqdn            = (known after apply)
+      + id              = (known after apply)
+      + name            = "medingen.in"
+      + records         = [
+          + "D6663451",
+          + "google-site-verification=G8Deyr5tOp22CfGSwDPP0Fx7aLjnaqysxA2EcYPPo7k",
+          + "v=spf1 include:secureserver.net include:zcsend.in -all",
+        ]
+      + ttl             = 300
+      + type            = "TXT"
+      + zone_id         = "Z02383291XM3A6NVIYWGM"
+    }
+
+  # module.route53.aws_route53_record.records["www.medingen.in._CNAME"] will be updated in-place
+  ~ resource "aws_route53_record" "records" {
+        id                               = "Z02383291XM3A6NVIYWGM_www.medingen.in._CNAME"
+        name                             = "www.medingen.in"
+      ~ records                          = [
+          - "des8ne135n583.cloudfront.net",
+          + "des8ne135n583.cloudfront.net.",
+        ]
+        # (7 unchanged attributes hidden)
+    }
+
+Plan: 4 to add, 2 to change, 0 to destroy.
+
+Warning: Resource targeting is in effect
+
+You are creating a plan with the -target option, which means that the result of this plan may not represent all of the changes requested by the current configuration.
+
+The -target option is not for routine use, and is provided only for exceptional situations such as recovering from errors or mistakes, or when Terraform specifically
+suggests to use it as part of an error message.
+
+ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
+
+Saved the plan to: route53.tfplan
+
+To perform exactly these actions, run the following command to apply:
+    terraform apply "route53.tfplan"
